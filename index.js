@@ -41,6 +41,15 @@ function run() {
             const result = await productCollection.find(query).toArray()
             res.send(result)
         })
+        // user seales  
+        app.get('/addProduct/:email',async(req,res)=>{
+            const email = req.params.email;
+
+            const query = {email:email}
+            const result = await productCollection.find(query).toArray();
+            res.send(result);
+            console.log(result);
+        })
         // user informatotin read
         app.post('/usersInfo',async (req,res)=>{
             const userProfile = req.body;
