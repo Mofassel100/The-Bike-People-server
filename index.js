@@ -58,6 +58,12 @@ const role = req.query.role
             const result = await usersCollectData.find(query).toArray()
             res.send(result)
         })
+        app.get('/userInfo',async(req,res)=>{
+const email = req.query.email
+            const query ={email}
+            const admis = await usersCollectData.findOne(query)
+            res.send({isAdmin:admis.role === "admin"})
+        })
         // user informatotin read
         app.post('/usersInfo',async (req,res)=>{
             const userProfile = req.body;
