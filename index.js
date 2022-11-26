@@ -42,13 +42,21 @@ function run() {
             res.send(result)
         })
         // user seales  
-        app.get('/addProduct/:email',async(req,res)=>{
+        app.get('/deshbord/deshbord/myorders/:email',async(req,res)=>{
             const email = req.params.email;
 
             const query = {email:email}
-            const result = await productCollection.find(query).toArray();
+            const cursur = await productCollection.find(query);
+            const result = await cursur.toArray()
             res.send(result);
             console.log(result);
+        })
+
+        app.get('/userInfo',async(req,res)=>{
+const role = req.query.role
+            const query ={role}
+            const result = await usersCollectData.find(query).toArray()
+            res.send(result)
         })
         // user informatotin read
         app.post('/usersInfo',async (req,res)=>{
