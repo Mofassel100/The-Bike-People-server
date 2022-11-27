@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express()
 const cors = require('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -52,21 +52,71 @@ function run() {
             console.log(result);
         })
 
-//         app.get('/userInfoSellar',async(req,res)=>{
-// const role = req.query.role
-//             const query ={role}
-//             const result = await usersCollectData.find(query).toArray()
-//             res.send(result)
-//         })
+        app.get('/userInfoUserData',async(req,res)=>{
+const role = req.query.role
+            const query ={}
+            const result = await usersCollectData.find(query).toArray()
+            res.send(result)
+        })
+
+        // all sellar delete 
+        app.delete("/userSeler/Delete/:id",async(req,res)=>{
+
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)}
+            const result = await usersCollectData.deleteOne(query)
+            res.send(result)
+            console.log(result);
+        })
+        // buyer delete
+        app.delete('/userBuyer/Delete/:id',async(req,res)=>{
+
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)}
+            const result = await usersCollectData.deleteOne(query)
+            res.send(result)
+            console.log(result);
+        })
+        // Sellar Product Dellet 
+        app.delete('/SellarProduct/Delete/:id',async(req,res)=>{
+
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)}
+            const result = await productCollection.deleteOne(query)
+            res.send(result)
+            console.log(result);
+        })
         app.get('/adminRole/:email',async(req,res)=>{
 
             const email = req.params.email
             const query ={email}
-            console.log(email);
+           
             const user = await usersCollectData.findOne(query)
             res.send({isAdminRole:user.role ==='admin'})
-            console.log(user);
+           
         })
+        // user sellar Trur
+        app.get('/sellar/:email',async(req,res)=>{
+
+            const email = req.params.email
+            const query ={email}
+           
+            const user = await usersCollectData.findOne(query)
+            res.send({isSeller:user.role ==='sellar'})
+           
+        })
+        app.get('//:email',async(req,res)=>{
+
+            const email = req.params.email
+            const query ={email}
+           
+            const user = await usersCollectData.findOne(query)
+            res.send({isAdminRole:user.role ==='admin'})
+           
+        })
+
+
+
         // user informatotin read
         app.post('/usersInfo',async (req,res)=>{
             const userProfile = req.body;
