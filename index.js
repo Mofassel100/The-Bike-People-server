@@ -42,7 +42,7 @@ function run() {
             res.send(result)
         })
         // user seales  
-        app.get('/deshbord/deshbord/myorders/:email',async(req,res)=>{
+        app.get('/deshbord/myorders/:email',async(req,res)=>{
             const email = req.params.email;
 
             const query = {email:email}
@@ -52,17 +52,20 @@ function run() {
             console.log(result);
         })
 
-        app.get('/userInfo',async(req,res)=>{
-const role = req.query.role
-            const query ={role}
-            const result = await usersCollectData.find(query).toArray()
-            res.send(result)
-        })
-        app.get('/userInfo',async(req,res)=>{
-const email = req.query.email
+//         app.get('/userInfoSellar',async(req,res)=>{
+// const role = req.query.role
+//             const query ={role}
+//             const result = await usersCollectData.find(query).toArray()
+//             res.send(result)
+//         })
+        app.get('/adminRole/:email',async(req,res)=>{
+
+            const email = req.params.email
             const query ={email}
-            const admis = await usersCollectData.findOne(query)
-            res.send({isAdmin:admis.role === "admin"})
+            console.log(email);
+            const user = await usersCollectData.findOne(query)
+            res.send({isAdminRole:user.role ==='admin'})
+            console.log(user);
         })
         // user informatotin read
         app.post('/usersInfo',async (req,res)=>{
