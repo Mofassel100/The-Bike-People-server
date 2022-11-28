@@ -29,6 +29,8 @@ function run() {
         const catagoryCollection = client.db('productSales').collection('catagory')
         const productCollection = client.db('productSales').collection('product')
         const usersCollectData = client.db('productSales').collection('userProfile')
+        const bookmodalCollection = client.db('productSales').collection('bookmodal')
+        
         app.get('/catagory', async (req, res) => {
 
             const query = {}
@@ -56,6 +58,12 @@ function run() {
 const role = req.query.role
             const query ={}
             const result = await usersCollectData.find(query).toArray()
+            res.send(result)
+        })
+        app.get('/book',async(req,res)=>{
+const role = req.query.role
+            const query ={}
+            const result = await bookmodalCollection.find(query).toArray()
             res.send(result)
         })
 
@@ -105,6 +113,16 @@ const role = req.query.role
             res.send({isSeller:user.role ==='sellar'})
            
         })
+        // user sellar Trur
+        app.get('/buyer/:email',async(req,res)=>{
+
+            const email = req.params.email
+            const query ={email}
+           
+            const user = await usersCollectData.findOne(query)
+            res.send({isBuyer:user.role ==='buyer'})
+           
+        })
         app.get('//:email',async(req,res)=>{
 
             const email = req.params.email
@@ -123,6 +141,12 @@ const role = req.query.role
             const result = await usersCollectData.insertOne(userProfile);
             res.send(result)
         })
+        app.post('/bookmodal',async (req,res)=>{
+            const userProfile = req.body;
+            const result = await bookmodalCollection.insertOne(userProfile);
+            res.send(result)
+        })
+
 // Add Product add database
 app.post('/addProduct',async(req,res)=>{
 
